@@ -7,13 +7,15 @@
   <artifactId>sudoku</artifactId>
   <version>1.0-SNAPSHOT</version>
 
+  <!-- компилируем под Java 17 -->
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
   </properties>
 
+  <!-- исходный блок -->
   <dependencies>
-    <!-- JUnit -->
+    <!-- JUnit для тестов -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
@@ -21,19 +23,47 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- SQLite -->
+    <!-- драйвер SQLite -->
     <dependency>
       <groupId>org.xerial</groupId>
       <artifactId>sqlite-jdbc</artifactId>
       <version>3.46.0.0</version>
     </dependency>
 
-    <!-- Flyway -->
+    <!-- Flyway для миграций БД -->
     <dependency>
       <groupId>org.flywaydb</groupId>
       <artifactId>flyway-core</artifactId>
       <version>10.11.0</version>
     </dependency>
+
+    <!-- тихий SLF4J, чтобы не было красного спама в консоли -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-nop</artifactId>
+      <version>1.7.36</version>
+    </dependency>
   </dependencies>
 
+  <!-- Набор плагинов -->
+  <build>
+    <plugins>
+      <!-- Компиляция -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
+      </plugin>
+
+      <!-- Запуск JUnit-тестов -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.5</version>
+        <configuration>
+          <useModulePath>false</useModulePath>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
