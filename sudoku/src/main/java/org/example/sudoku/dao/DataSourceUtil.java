@@ -5,7 +5,7 @@ import org.sqlite.SQLiteDataSource;
 
 public class DataSourceUtil {
 
-    private static final String DB_URL = "jdbc:sqlite:sudoku.db";
+    private static final String DB_URL = "jdbc:sqlite:C:/Users/robok/IdeaProjects/Sudoku/sudoku.db";
     private static SQLiteDataSource dataSource;
 
     public static DataSource getDataSource() {
