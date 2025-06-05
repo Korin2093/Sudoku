@@ -1,8 +1,8 @@
--- Manual database fix script
--- Run this SQL command directly on your SQLite database if the migration doesn't work
+-- ручное исправление базы данных
+-- запустите эти команды в sqlite, если миграция не сработала
 
--- Add the missing column to the savegame table
+-- добавляем недостающую колонку в таблицу savegame
 ALTER TABLE savegame ADD COLUMN preset_snapshot TEXT;
 
--- Verify the column was added
+-- проверяем, что колонка добавилась
 PRAGMA table_info(savegame);

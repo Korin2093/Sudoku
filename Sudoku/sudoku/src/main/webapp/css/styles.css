@@ -1,4 +1,4 @@
-/* General styles */
+/* общие стили */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -100,7 +100,7 @@ h1 {
     font-style: italic;
 }
 
-/* Controls section */
+/* блок управления */
 .controls {
     display: flex;
     align-items: center;
@@ -130,7 +130,7 @@ h1 {
     outline: none;
 }
 
-/* Buttons */
+/* кнопки */
 button {
     padding: 10px 20px;
     background-color: #4CAF50;
@@ -159,14 +159,14 @@ button:active {
     background-color: #1976D2;
 }
 
-/* Game area */
+/* игровая зона */
 .game-area {
     display: flex;
     justify-content: center;
     margin: 30px 0;
 }
 
-/* Sudoku grid */
+/* сетка судоку */
 #sudokuGrid {
     border-collapse: collapse;
     border: 3px solid #333;
@@ -183,7 +183,7 @@ button:active {
     position: relative;
 }
 
-/* Thick borders for 3x3 blocks */
+/* толстые линии для блоков 3x3 */
 #sudokuGrid tr:nth-child(3n) td {
     border-bottom: 2px solid #333;
 }
@@ -200,7 +200,7 @@ button:active {
     border-right: 3px solid #333;
 }
 
-/* Cell inputs */
+/* ячейки */
 .cell {
     width: 100%;
     height: 100%;
@@ -223,7 +223,7 @@ button:active {
     box-shadow: inset 0 0 0 2px #2196F3;
 }
 
-/* Preset cells (given numbers) */
+/* предзаполненные ячейки */
 .cell.preset {
     background-color: #f0f0f0;
     color: #000;
@@ -234,7 +234,7 @@ button:active {
     background-color: #f0f0f0;
 }
 
-/* Valid cells */
+/* правильные ячейки */
 .cell.valid {
     background-color: #c8e6c9;
     color: #2e7d32;
@@ -246,7 +246,7 @@ button:active {
     background-color: #a5d6a7;
 }
 
-/* Invalid cells */
+/* ошибочные ячейки */
 .cell.error {
     background-color: #ffcdd2;
     color: #c62828;
@@ -265,7 +265,7 @@ button:active {
     75% { transform: translateX(2px); }
 }
 
-/* Action buttons */
+/* кнопки действий */
 .action-buttons {
     display: flex;
     justify-content: center;
@@ -289,7 +289,7 @@ button:active {
     background-color: #7B1FA2;
 }
 
-/* Message area */
+/* область сообщений */
 .message {
     text-align: center;
     padding: 15px;
@@ -324,7 +324,7 @@ button:active {
     border: 1px solid #ffcdd2;
 }
 
-/* Responsive design */
+/* адаптивность */
 @media (max-width: 600px) {
     .container {
         padding: 15px;
@@ -355,19 +355,19 @@ button:active {
     }
 }
 
-/* Loading state */
+/* состояние загрузки */
 .loading {
     opacity: 0.6;
     pointer-events: none;
 }
 
-/* Solved state */
+/* решённая игра */
 .solved .cell {
     background-color: #e8f5e8 !important;
     color: #2e7d32 !important;
 }
 
-/* Stats button */
+/* кнопка статистики */
 #statsBtn {
     background-color: #607D8B;
 }
@@ -376,7 +376,7 @@ button:active {
     background-color: #455A64;
 }
 
-/* Modal styles */
+/* стили модальных окон */
 .modal {
     display: none;
     position: fixed;
@@ -485,7 +485,7 @@ button:active {
     font-size: 0.9em;
 }
 
-/* Statistics styles */
+/* стили статистики */
 .stats-section {
     margin: 30px 0;
     text-align: left;
@@ -581,7 +581,7 @@ button:active {
     color: #333;
 }
 
-/* Responsive modal */
+/* адаптивность модального окна */
 @media (max-width: 600px) {
     .modal-content {
         width: 95%;

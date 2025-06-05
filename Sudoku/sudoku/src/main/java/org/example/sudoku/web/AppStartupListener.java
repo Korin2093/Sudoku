@@ -13,13 +13,13 @@ public class AppStartupListener implements ServletContextListener {
         System.out.println("Starting Sudoku web application...");
         
         try {
-            // Run database migrations on application startup
+            // запускаем миграцию базы при старте приложения
             FlywayMigrator.migrate();
             System.out.println("✅ Database migration completed successfully");
         } catch (Exception e) {
             System.err.println("❌ Error during database initialization: " + e.getMessage());
             e.printStackTrace();
-            // Don't stop the application, but log the error
+            // не останавливаем приложение, просто пишем ошибку
         }
     }
     

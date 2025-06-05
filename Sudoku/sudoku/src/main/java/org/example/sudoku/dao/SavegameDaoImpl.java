@@ -12,7 +12,7 @@ public class SavegameDaoImpl implements SavegameDao {
 
     @Override
     public GameState save(GameState entity) {
-        // Check if preset_snapshot column exists
+        // проверяем, есть ли колонка preset_snapshot
         if (hasPresetSnapshotColumn()) {
             String sql = "INSERT INTO savegame(puzzle_id, board, preset_snapshot, seconds) VALUES(?,?,?,?)";
             try (Connection conn = ds.getConnection();
@@ -31,7 +31,7 @@ public class SavegameDaoImpl implements SavegameDao {
                 throw new RuntimeException(e);
             }
         } else {
-            // Fallback to old schema without preset_snapshot
+            // откатываемся на старую схему без preset_snapshot
             String sql = "INSERT INTO savegame(puzzle_id, board, seconds) VALUES(?,?,?)";
             try (Connection conn = ds.getConnection();
                  PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -97,12 +97,12 @@ public class SavegameDaoImpl implements SavegameDao {
         int puzzleId = rs.getInt("puzzle_id");
         String board = rs.getString("board");
         
-        // Handle preset_snapshot safely - it might not exist in older schema
+        // аккуратно читаем preset_snapshot, в старой схеме его может не быть
         String presetSnapshot = null;
         try {
             presetSnapshot = rs.getString("preset_snapshot");
         } catch (SQLException e) {
-            // Column doesn't exist, use null
+            // колонки нет, значит ставим null
             presetSnapshot = null;
         }
         

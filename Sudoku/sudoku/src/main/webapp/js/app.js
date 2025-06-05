@@ -119,7 +119,7 @@ class SudokuGame {
             console.log('[SUDOKU] New game response:', { status: response.status, data });
 
             if (response.ok) {
-                // Store complete game data including seed
+                // сохраняем все данные игры вместе с seed
                 this.currentGame = {
                     id: data.id,
                     seed: data.seed,
@@ -210,7 +210,7 @@ class SudokuGame {
             console.log('[SUDOKU] Load response:', { status: response.status, data });
 
             if (response.ok) {
-                // First get the puzzle to retrieve the seed
+                // сначала берем puzzle, чтобы получить seed
                 const puzzleResponse = await fetch(`/api/puzzle/${data.puzzleId}`);
                 let seed = null;
 
@@ -219,17 +219,17 @@ class SudokuGame {
                     seed = puzzleData.seed;
                 }
 
-                // Restore game state
+                // восстанавливаем состояние игры
                 this.currentGame = {
                     id: data.puzzleId,
                     level: data.level,
-                    seed: seed || null // Use retrieved seed or fallback to puzzleId for solve requests
+                    seed: seed || null // берем найденный seed или id головоломки
                 };
 
                 this.isGameSolved = false;
                 this.gameStartTime = Date.now() - (data.elapsedSeconds * 1000);
 
-                // Display loaded state with preset cell information
+                // показываем загруженную игру с учётом preset ячеек
                 this.renderLoadedGame(data.boardSnapshot, data.presetSnapshot);
                 this.showMessage(`Игра загружена! Время: ${data.formattedTime}`, 'success');
 
@@ -482,7 +482,7 @@ class SudokuGame {
         this.showMessage('Решение головоломки...', 'info');
 
         try {
-            // Always ensure we have either seed or puzzleId
+            // всегда проверяем что есть seed или puzzleId
             let requestBody = {};
 
             if (this.currentGame.seed) {
@@ -493,7 +493,7 @@ class SudokuGame {
                 requestBody.puzzleId = this.currentGame.id;
             }
 
-            // Ensure we have at least one identifier
+            // убеждаемся что передан хотя бы один идентификатор
             if (!requestBody.seed && !requestBody.puzzleId) {
                 throw new Error('No seed or puzzle ID available');
             }
