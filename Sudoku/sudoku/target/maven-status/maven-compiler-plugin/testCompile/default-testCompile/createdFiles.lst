@@ -1,0 +1,4 @@
+org\example\sudoku\service\PuzzleGeneratorTest.class
+dao\SavegameDaoTest.class
+org\example\sudoku\service\BoardValidatorTest.class
+org\example\sudoku\service\SolverServiceTest.class

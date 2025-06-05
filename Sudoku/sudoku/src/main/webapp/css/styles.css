@@ -1,0 +1,602 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+}
+
+/* Стили для сохраненных игр */
+.saved-games-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.saved-game-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    background-color: #f9f9f9;
+}
+
+.save-info {
+    flex: 1;
+}
+
+.save-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.save-details {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.save-level {
+    margin-right: 15px;
+    padding: 2px 8px;
+    background-color: #e3f2fd;
+    border-radius: 12px;
+    font-size: 0.8em;
+}
+
+.save-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.load-btn, .delete-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.load-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.load-btn:hover {
+    background-color: #45a049;
+}
+
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #da190b;
+}
+
+.no-saves {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-style: italic;
+}
+
+/* Controls section */
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.controls label {
+    font-weight: bold;
+    color: #555;
+}
+
+.controls select {
+    padding: 8px 12px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+}
+
+.controls select:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+/* Buttons */
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+#newGameBtn {
+    background-color: #2196F3;
+}
+
+#newGameBtn:hover {
+    background-color: #1976D2;
+}
+
+/* Game area */
+.game-area {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+/* Sudoku grid */
+#sudokuGrid {
+    border-collapse: collapse;
+    border: 3px solid #333;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#sudokuGrid td {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 0;
+    position: relative;
+}
+
+/* Thick borders for 3x3 blocks */
+#sudokuGrid tr:nth-child(3n) td {
+    border-bottom: 2px solid #333;
+}
+
+#sudokuGrid tr:nth-child(9) td {
+    border-bottom: 3px solid #333;
+}
+
+#sudokuGrid td:nth-child(3n) {
+    border-right: 2px solid #333;
+}
+
+#sudokuGrid td:nth-child(9) {
+    border-right: 3px solid #333;
+}
+
+/* Cell inputs */
+.cell {
+    width: 100%;
+    height: 100%;
+    border: none;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: transparent;
+    color: #333;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.cell:hover:not([readonly]) {
+    background-color: #e3f2fd;
+}
+
+.cell:focus:not([readonly]) {
+    background-color: #bbdefb;
+    box-shadow: inset 0 0 0 2px #2196F3;
+}
+
+/* Preset cells (given numbers) */
+.cell.preset {
+    background-color: #f0f0f0;
+    color: #000;
+    font-weight: bold;
+}
+
+.cell.preset:hover {
+    background-color: #f0f0f0;
+}
+
+/* Valid cells */
+.cell.valid {
+    background-color: #c8e6c9;
+    color: #2e7d32;
+    border-bottom: 3px solid #4CAF50;
+    font-weight: bold;
+}
+
+.cell.valid:hover {
+    background-color: #a5d6a7;
+}
+
+/* Invalid cells */
+.cell.error {
+    background-color: #ffcdd2;
+    color: #c62828;
+    border-bottom: 3px solid #f44336;
+    font-weight: bold;
+    animation: shake 0.5s;
+}
+
+.cell.error:hover {
+    background-color: #ef9a9a;
+}
+
+@keyframes shake {
+    0%, 50%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
+}
+
+/* Action buttons */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+#validateBtn {
+    background-color: #FF9800;
+}
+
+#validateBtn:hover {
+    background-color: #F57C00;
+}
+
+#solveBtn {
+    background-color: #9C27B0;
+}
+
+#solveBtn:hover {
+    background-color: #7B1FA2;
+}
+
+/* Message area */
+.message {
+    text-align: center;
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 20px;
+    font-weight: bold;
+    min-height: 20px;
+    transition: all 0.3s ease;
+}
+
+.message.info {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    border: 1px solid #bbdefb;
+}
+
+.message.success {
+    background-color: #e8f5e8;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.message.warning {
+    background-color: #fff3e0;
+    color: #f57c00;
+    border: 1px solid #ffcc02;
+}
+
+.message.error {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+        margin: 10px;
+    }
+    
+    .controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    #sudokuGrid td {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .cell {
+        font-size: 16px;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+}
+
+/* Loading state */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Solved state */
+.solved .cell {
+    background-color: #e8f5e8 !important;
+    color: #2e7d32 !important;
+}
+
+/* Stats button */
+#statsBtn {
+    background-color: #607D8B;
+}
+
+#statsBtn:hover {
+    background-color: #455A64;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.close {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 5px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.modal-body {
+    padding: 30px;
+    text-align: center;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.stat-card {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.stat-card h3 {
+    margin: 0 0 10px 0;
+    color: #4CAF50;
+    font-size: 1.2em;
+}
+
+.stat-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #333;
+    margin: 10px 0;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* Statistics styles */
+.stats-section {
+    margin: 30px 0;
+    text-align: left;
+}
+
+.stats-section h3 {
+    color: #4CAF50;
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    background-color: #f8f9fa;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border-left: 4px solid #4CAF50;
+}
+
+.level-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.level-stat {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.level-stat h4 {
+    margin: 0 0 15px 0;
+    color: #4CAF50;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.stat-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stat-details > div {
+    padding: 8px;
+    background-color: white;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.game-history {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+}
+
+.history-item {
+    display: grid;
+    grid-template-columns: 60px 1fr 100px;
+    gap: 15px;
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+    align-items: center;
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-item:hover {
+    background-color: #f8f9fa;
+}
+
+.game-number {
+    font-weight: bold;
+    color: #666;
+    text-align: center;
+}
+
+.game-level {
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.game-duration {
+    font-family: monospace;
+    font-weight: bold;
+    text-align: right;
+    color: #333;
+}
+
+/* Responsive modal */
+@media (max-width: 600px) {
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+    
+    .modal-header {
+        padding: 15px;
+    }
+    
+    .modal-body {
+        padding: 20px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}

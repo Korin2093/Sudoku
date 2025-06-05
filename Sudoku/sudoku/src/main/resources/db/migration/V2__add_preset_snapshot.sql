@@ -1,0 +1,1 @@
+ALTER TABLE savegame ADD COLUMN preset_snapshot TEXT;
