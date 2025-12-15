@@ -45,10 +45,10 @@ public class ValidateMoveServlet extends HttpServlet {
             
             JsonNode jsonNode = objectMapper.readTree(sb.toString());
             
-            String seed = jsonNode.get("seed").asText();
-            int row = jsonNode.get("row").asInt();
-            int col = jsonNode.get("col").asInt();
-            int value = jsonNode.get("value").asInt();
+            String seed = requireBoardSeed(jsonNode);
+            int row = requireCoordinate(jsonNode, "row");
+            int col = requireCoordinate(jsonNode, "col");
+            int value = requireDigit(jsonNode);
             
             boolean canPlace = gameService.canPlace(seed, row, col, value);
             
@@ -58,11 +58,46 @@ public class ValidateMoveServlet extends HttpServlet {
             String jsonResponse = objectMapper.writeValueAsString(result);
             response.getWriter().write(jsonResponse);
             
+        } catch (IllegalArgumentException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            Map<String, String> error = new HashMap<>();
+            error.put("error", e.getMessage());
+            response.getWriter().write(objectMapper.writeValueAsString(error));
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             Map<String, String> error = new HashMap<>();
             error.put("error", "Invalid request: " + e.getMessage());
             response.getWriter().write(objectMapper.writeValueAsString(error));
         }
+    }
+
+    private String requireBoardSeed(JsonNode jsonNode) {
+        if (jsonNode.hasNonNull("seed")) {
+            String seed = jsonNode.get("seed").asText();
+            if (seed != null && seed.matches("[0-9]{81}")) {
+                return seed;
+            }
+        }
+        throw new IllegalArgumentException("Field 'seed' must contain exactly 81 digits");
+    }
+
+    private int requireCoordinate(JsonNode jsonNode, String field) {
+        if (jsonNode.hasNonNull(field)) {
+            int value = jsonNode.get(field).asInt();
+            if (value >= 0 && value < 9) {
+                return value;
+            }
+        }
+        throw new IllegalArgumentException("Field '" + field + "' must be between 0 and 8");
+    }
+
+    private int requireDigit(JsonNode jsonNode) {
+        if (jsonNode.hasNonNull("value")) {
+            int digit = jsonNode.get("value").asInt();
+            if (digit >= 1 && digit <= 9) {
+                return digit;
+            }
+        }
+        throw new IllegalArgumentException("Field 'value' must be between 1 and 9");
     }
 }

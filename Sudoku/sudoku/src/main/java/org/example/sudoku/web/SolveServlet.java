@@ -61,6 +61,10 @@ public class SolveServlet extends HttpServlet {
                 throw new IllegalArgumentException("Either 'seed' or 'puzzleId' must be provided");
             }
             
+            if (!seed.matches("[0-9]{81}")) {
+                throw new IllegalArgumentException("Seed must contain exactly 81 digits");
+            }
+
             String solution = gameService.solve(seed);
             
             Map<String, Object> result = new HashMap<>();
