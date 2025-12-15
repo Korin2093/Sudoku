@@ -43,10 +43,10 @@ public class SaveGameServlet extends HttpServlet {
             @SuppressWarnings("unchecked")
             Map<String, Object> requestData = objectMapper.readValue(jsonBody, Map.class);
 
-            int puzzleId = (Integer) requestData.get("puzzleId");
-            String boardSnapshot = (String) requestData.get("boardSnapshot");
-            String presetSnapshot = (String) requestData.get("presetSnapshot");
-            int elapsedSeconds = (Integer) requestData.get("elapsedSeconds");
+            int puzzleId = readIntField(requestData, "puzzleId");
+            String boardSnapshot = validateBoardSnapshot(readStringField(requestData, "boardSnapshot"));
+            String presetSnapshot = validatePresetSnapshot((String) requestData.get("presetSnapshot"));
+            int elapsedSeconds = readNonNegativeInt(requestData, "elapsedSeconds");
 
             // Получаем puzzle по ID
             Puzzle puzzle = gameService.getPuzzleById(puzzleId);
@@ -67,6 +67,12 @@ public class SaveGameServlet extends HttpServlet {
 
             String jsonResponse = objectMapper.writeValueAsString(result);
             response.getWriter().write(jsonResponse);
+
+        } catch (IllegalArgumentException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            Map<String, String> error = new HashMap<>();
+            error.put("error", e.getMessage());
+            response.getWriter().write(objectMapper.writeValueAsString(error));
 
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -127,6 +133,48 @@ public class SaveGameServlet extends HttpServlet {
             error.put("error", "Failed to load game: " + e.getMessage());
             response.getWriter().write(objectMapper.writeValueAsString(error));
         }
+    }
+
+    private int readIntField(Map<String, Object> data, String field) {
+        Object rawValue = data.get(field);
+        if (rawValue instanceof Number number) {
+            return number.intValue();
+        }
+        throw new IllegalArgumentException("Field '" + field + "' is required and must be a number");
+    }
+
+    private int readNonNegativeInt(Map<String, Object> data, String field) {
+        int value = readIntField(data, field);
+        if (value < 0) {
+            throw new IllegalArgumentException("Field '" + field + "' cannot be negative");
+        }
+        return value;
+    }
+
+    private String readStringField(Map<String, Object> data, String field) {
+        Object rawValue = data.get(field);
+        if (rawValue instanceof String stringValue && !stringValue.isEmpty()) {
+            return stringValue;
+        }
+        throw new IllegalArgumentException("Field '" + field + "' is required and must be a string");
+    }
+
+    private String validateBoardSnapshot(String snapshot) {
+        if (snapshot == null || snapshot.length() != 81 || !snapshot.matches("[0-9]{81}")) {
+            throw new IllegalArgumentException("Board snapshot must contain exactly 81 digits");
+        }
+        return snapshot;
+    }
+
+    private String validatePresetSnapshot(String snapshot) {
+        if (snapshot == null || snapshot.isEmpty()) {
+            return "0".repeat(81); // backwards compatibility for old clients
+        }
+
+        if (snapshot.length() != 81 || !snapshot.matches("[01]{81}")) {
+            throw new IllegalArgumentException("Preset snapshot must contain exactly 81 characters of 0 or 1");
+        }
+        return snapshot;
     }
 
     @Override
